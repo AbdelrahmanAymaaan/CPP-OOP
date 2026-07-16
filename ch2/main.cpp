@@ -86,6 +86,7 @@ class Stack {
 
     public:
         Stack(int s = 10) : size(s), top(-1) { // Constructor to initialize stack
+            // this is a copy construct
             // here top is initialized to -1, indicating that the stack is empty. The size of the stack is set to the value passed as an argument (default is 10). The arr pointer is allocated memory for an array of integers of the specified size.
             // also I use ++top in push() to increment the top index before adding a new element to the stack. This ensures that the new element is added at the correct position in the array, and it also helps to avoid overwriting existing elements in the stack.
             counter++; // Increment the counter for each new instance of Stack created.
@@ -102,6 +103,7 @@ class Stack {
         void push(int value); // Function to add an element to the stack.
         void pop(); // Function to remove the top element from the stack.
         void print() const; // Function to print the elements of the stack.
+        friend void printStackInfo(const Stack& s); // Friend function to access private members of the Stack class.
         static int getCounter() { return counter; } // Static function to get the current count of Stack instances.
 };
 
@@ -133,6 +135,11 @@ void Stack::print() const {
 
 int Stack::counter = 0; // Define the static member variable counter outside the class definition.
 
+void printStackInfo(const Stack& s){
+    cout << "Stack Info " << s.top << " " << s.size << endl;
+}
+
+
 int main() {
     Stack s(5); // Create a stack of size 5
     s.push(10); // Push elements onto the stack
@@ -140,6 +147,8 @@ int main() {
     s.push(30);
     s.print(); // Print the current elements in the stack
     cout << "Number of Stack instances: " << Stack::getCounter() << endl;
+    cout << "Stack INFO: ";
+    printStackInfo(s);
     s.pop(); // Pop the top element from the stack
     return 0; // The destructor will be called automatically when the stack object goes out of scope.
 }
